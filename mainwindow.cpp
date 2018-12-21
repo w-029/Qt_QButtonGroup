@@ -1,23 +1,16 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include <QDebug>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    ui->cb_assit->setVisible(false);
 
-    buttonGroup = new QButtonGroup;
-    buttonGroup->addButton(ui->cb_assit, -1);
-    buttonGroup->addButton(ui->cb_testing, 0);
-    buttonGroup->addButton(ui->cb_result_ok, 1);
-    buttonGroup->addButton(ui->cb_result_ng, 2);
+    initItemGroup();
 
-    connect(ui->pb_test_exe, SIGNAL(clicked()), this, SLOT(on_startTwinkle()));
-    connect(ui->cb_testing, SIGNAL(clicked()), this, SLOT(on_startTwinkle()));
-    connect(ui->cb_result_ok, SIGNAL(clicked()), this, SLOT(on_endTwinkle()));
-    connect(ui->cb_result_ng, SIGNAL(clicked()), this, SLOT(on_endTwinkle()));
+    timerId = startTimer(800);
 }
 
 MainWindow::~MainWindow()
@@ -25,35 +18,86 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::on_startTwinkle()
+void MainWindow::initItemGroup()
 {
-    bTwinkle = true;
-    ui->cb_testing->setChecked(true);
-    timerId = this->startTimer(800);
+    QButtonGroup* itemGroup = new QButtonGroup;
+    ui->cb_assit->setVisible(false);
+    itemGroup->addButton(ui->cb_assit, WAITING_TEST);
+    itemGroup->addButton(ui->cb_testing, TESTING);
+    itemGroup->addButton(ui->cb_result_ok, RESULT_OK);
+    itemGroup->addButton(ui->cb_result_ng, RESULT_NG);
+    connect(itemGroup, SIGNAL(buttonClicked(int)), this, SLOT(on_clickItem_1(int)));
+    mItemGroup[TEST_ITEM_1] = itemGroup;
+
+    QButtonGroup* itemGroup_2 = new QButtonGroup;
+    ui->cb_assit_2->setVisible(false);
+    itemGroup_2->addButton(ui->cb_assit_2, WAITING_TEST);
+    itemGroup_2->addButton(ui->cb_testing_2, TESTING);
+    itemGroup_2->addButton(ui->cb_result_ok_2, RESULT_OK);
+    itemGroup_2->addButton(ui->cb_result_ng_2, RESULT_NG);
+    connect(itemGroup_2, SIGNAL(buttonClicked(int)), this, SLOT(on_clickItem_2(int)));
+    mItemGroup[TEST_ITEM_2] = itemGroup_2;
+
+    QButtonGroup* itemGroup_3 = new QButtonGroup;
+    ui->cb_assit_3->setVisible(false);
+    itemGroup_3->addButton(ui->cb_assit_3, WAITING_TEST);
+    itemGroup_3->addButton(ui->cb_testing_3, TESTING);
+    itemGroup_3->addButton(ui->cb_result_ok_3, RESULT_OK);
+    itemGroup_3->addButton(ui->cb_result_ng_3, RESULT_NG);
+    connect(itemGroup_3, SIGNAL(buttonClicked(int)), this, SLOT(on_clickItem_3(int)));
+    mItemGroup[TEST_ITEM_3] = itemGroup_3;
 }
 
-void MainWindow::on_endTwinkle()
+void MainWindow::on_clickItem_1(int id)
 {
-    bTwinkle = false;
+    setItemStatus(TEST_ITEM_1, id);
+}
+
+void MainWindow::on_clickItem_2(int id)
+{
+    setItemStatus(TEST_ITEM_2, id);
+}
+
+void MainWindow::on_clickItem_3(int id)
+{
+    setItemStatus(TEST_ITEM_3, id);
+}
+
+void MainWindow::setItemStatus(eTestItemIndex item, int status)
+{
+    qDebug() << "checkBox clicked id: " << i2q(status) << endl;
+
+    switch (status) {
+    case TESTING:
+        mTesting[item] = true;
+        break;
+    case RESULT_OK:
+    case RESULT_NG:
+        mTesting[item] = false;
+        break;
+    default:
+        break;
+    }
 }
 
 void MainWindow::timerEvent(QTimerEvent* event)
 {
-    if (bTwinkle && event->timerId() == timerId) {
-        twinkle(ui->cb_testing);
+    if (event->timerId() == timerId) {
+        map<eTestItemIndex, bool>::iterator iter;
+        for (iter = mTesting.begin(); iter != mTesting.end(); iter++) {
+            if (iter->second) {
+                twinkle(iter->first);
+            }
+        }
     }
 }
 
-void MainWindow::twinkle(QCheckBox* cbTwinkle)
+void MainWindow::twinkle(eTestItemIndex item)
 {
-    if (ui->cb_testing->isChecked()) {
-        /* this will not take effect */
-//        ui->cb_testing->setChecked(false);
-
-        /* this is pivotal */
-        ui->cb_assit->setChecked(true);
+    if (mItemGroup[item]->button(TESTING)->isChecked()) {
+        mItemGroup[item]->button(WAITING_TEST)->setChecked(true);
     }
     else {
-        cbTwinkle->setChecked(true);
+         mItemGroup[item]->button(TESTING)->setChecked(true);
     }
 }

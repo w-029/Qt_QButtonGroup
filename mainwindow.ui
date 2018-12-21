@@ -14,26 +14,13 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <widget class="QCheckBox" name="cb_assit">
-    <property name="geometry">
-     <rect>
-      <x>0</x>
-      <y>0</y>
-      <width>16</width>
-      <height>18</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-   </widget>
    <widget class="QGroupBox" name="groupBox">
     <property name="geometry">
      <rect>
       <x>30</x>
       <y>30</y>
-      <width>231</width>
-      <height>81</height>
+      <width>211</width>
+      <height>121</height>
      </rect>
     </property>
     <property name="sizePolicy">
@@ -46,14 +33,42 @@
      <string>TestGroup</string>
     </property>
     <layout class="QGridLayout" name="gridLayout">
-     <item row="1" column="1" alignment="Qt::AlignHCenter">
+     <item row="2" column="1" alignment="Qt::AlignHCenter">
+      <widget class="QCheckBox" name="cb_assit_2">
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="0">
+      <widget class="QLabel" name="label_5">
+       <property name="text">
+        <string>TestItem_2</string>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="1" alignment="Qt::AlignHCenter">
+      <widget class="QCheckBox" name="cb_assit_3">
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="0">
+      <widget class="QLabel" name="label_6">
+       <property name="text">
+        <string>TestItem_3</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="2" alignment="Qt::AlignHCenter">
       <widget class="QCheckBox" name="cb_testing">
        <property name="text">
         <string/>
        </property>
       </widget>
      </item>
-     <item row="0" column="1" alignment="Qt::AlignHCenter">
+     <item row="0" column="2" alignment="Qt::AlignHCenter">
       <widget class="QLabel" name="label">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
@@ -66,21 +81,21 @@
        </property>
       </widget>
      </item>
-     <item row="1" column="2" alignment="Qt::AlignHCenter">
+     <item row="1" column="3" alignment="Qt::AlignHCenter">
       <widget class="QCheckBox" name="cb_result_ok">
        <property name="text">
         <string/>
        </property>
       </widget>
      </item>
-     <item row="1" column="3" alignment="Qt::AlignHCenter">
+     <item row="1" column="4" alignment="Qt::AlignHCenter">
       <widget class="QCheckBox" name="cb_result_ng">
        <property name="text">
         <string/>
        </property>
       </widget>
      </item>
-     <item row="0" column="2" alignment="Qt::AlignHCenter">
+     <item row="0" column="3" alignment="Qt::AlignHCenter">
       <widget class="QLabel" name="label_2">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
@@ -93,7 +108,7 @@
        </property>
       </widget>
      </item>
-     <item row="0" column="3" alignment="Qt::AlignHCenter">
+     <item row="0" column="4" alignment="Qt::AlignHCenter">
       <widget class="QLabel" name="label_3">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
@@ -113,10 +128,59 @@
        </property>
       </widget>
      </item>
-     <item row="0" column="0" alignment="Qt::AlignHCenter">
-      <widget class="QPushButton" name="pb_test_exe">
+     <item row="0" column="0" colspan="2">
+      <widget class="QPushButton" name="pb_exe_group">
        <property name="text">
         <string>Execte</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="1" alignment="Qt::AlignHCenter">
+      <widget class="QCheckBox" name="cb_assit">
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="2" alignment="Qt::AlignHCenter">
+      <widget class="QCheckBox" name="cb_testing_2">
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="2" alignment="Qt::AlignHCenter">
+      <widget class="QCheckBox" name="cb_testing_3">
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="3" alignment="Qt::AlignHCenter">
+      <widget class="QCheckBox" name="cb_result_ok_2">
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="3" alignment="Qt::AlignHCenter">
+      <widget class="QCheckBox" name="cb_result_ok_3">
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="4" alignment="Qt::AlignHCenter">
+      <widget class="QCheckBox" name="cb_result_ng_2">
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="4" alignment="Qt::AlignHCenter">
+      <widget class="QCheckBox" name="cb_result_ng_3">
+       <property name="text">
+        <string/>
        </property>
       </widget>
      </item>
