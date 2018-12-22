@@ -5,6 +5,11 @@
 #include <QButtonGroup>
 #include <QCheckBox>
 
+typedef enum eTestGroupIndex
+{
+    TEST_GROUP_1 = 0x00,
+} eTestGroupIndex;
+
 typedef enum eTestItemIndex
 {
     TEST_ITEM_1 = 0x00,
@@ -19,7 +24,6 @@ typedef enum eTestItemStatus
     RESULT_OK = 0x02,
     RESULT_NG = 0x04,
 } eTestItemStatus;
-
 
 using namespace std;
 namespace Ui {
@@ -38,6 +42,7 @@ public slots:
     void on_clickItem_1(int id);
     void on_clickItem_2(int id);
     void on_clickItem_3(int id);
+    void on_clickExe(int id);
 
 private:
     void timerEvent(QTimerEvent* event);
@@ -52,8 +57,10 @@ private:
 private:
     Ui::MainWindow *ui;
     int timerId;
-    map<eTestItemIndex, QButtonGroup*> mItemGroup;
+    QButtonGroup* mExeGroup;
     map<eTestItemIndex, bool> mTesting;
+    map<eTestItemIndex, QButtonGroup*> mItemGroup;
+    map<eTestGroupIndex, map<eTestItemIndex, QButtonGroup*>> mTestGroup;
 };
 
 #endif // MAINWINDOW_H

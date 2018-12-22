@@ -9,6 +9,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
 
     initItemGroup();
+    initExeGroup();
 
     timerId = startTimer(800);
 }
@@ -20,14 +21,15 @@ MainWindow::~MainWindow()
 
 void MainWindow::initItemGroup()
 {
-    QButtonGroup* itemGroup = new QButtonGroup;
+    /* init group_1 */
+    QButtonGroup* itemGroup_1 = new QButtonGroup;
     ui->cb_assit->setVisible(false);
-    itemGroup->addButton(ui->cb_assit, WAITING_TEST);
-    itemGroup->addButton(ui->cb_testing, TESTING);
-    itemGroup->addButton(ui->cb_result_ok, RESULT_OK);
-    itemGroup->addButton(ui->cb_result_ng, RESULT_NG);
-    connect(itemGroup, SIGNAL(buttonClicked(int)), this, SLOT(on_clickItem_1(int)));
-    mItemGroup[TEST_ITEM_1] = itemGroup;
+    itemGroup_1->addButton(ui->cb_assit, WAITING_TEST);
+    itemGroup_1->addButton(ui->cb_testing, TESTING);
+    itemGroup_1->addButton(ui->cb_result_ok, RESULT_OK);
+    itemGroup_1->addButton(ui->cb_result_ng, RESULT_NG);
+    connect(itemGroup_1, SIGNAL(buttonClicked(int)), this, SLOT(on_clickItem_1(int)));
+    mItemGroup[TEST_ITEM_1] = itemGroup_1;
 
     QButtonGroup* itemGroup_2 = new QButtonGroup;
     ui->cb_assit_2->setVisible(false);
@@ -46,6 +48,43 @@ void MainWindow::initItemGroup()
     itemGroup_3->addButton(ui->cb_result_ng_3, RESULT_NG);
     connect(itemGroup_3, SIGNAL(buttonClicked(int)), this, SLOT(on_clickItem_3(int)));
     mItemGroup[TEST_ITEM_3] = itemGroup_3;
+
+    mTestGroup[TEST_GROUP_1] = mItemGroup;
+
+    /* init group_2 */
+
+}
+
+void MainWindow::initExeGroup()
+{
+    mExeGroup = new QButtonGroup;
+    mExeGroup->addButton(ui->pb_exe_group, TEST_GROUP_1);
+    connect(mExeGroup, SIGNAL(buttonClicked(int)), this, SLOT(on_clickExe(int)));
+}
+
+void MainWindow::on_clickExe(int id)
+{
+    qDebug() << "ese clicked id: " << i2q(id);
+
+    map<eTestItemIndex, QButtonGroup*> testGroup;
+    switch (id) {
+    case TEST_GROUP_1:
+        testGroup = mTestGroup[TEST_GROUP_1];
+        break;
+    }
+
+    map<eTestItemIndex, QButtonGroup*>::iterator iter;
+    /* clear previous item status */
+    for (iter =testGroup.begin(); iter != testGroup.end(); iter++) {
+        mTesting[iter->first] = false;
+        iter->second->button(WAITING_TEST)->setChecked(true);
+    }
+
+    /* start group test */
+    for (iter =testGroup.begin(); iter != testGroup.end(); iter++) {
+        mTesting[iter->first] = true;
+        iter->second->button(TESTING)->setChecked(true);
+    }
 }
 
 void MainWindow::on_clickItem_1(int id)
@@ -65,8 +104,6 @@ void MainWindow::on_clickItem_3(int id)
 
 void MainWindow::setItemStatus(eTestItemIndex item, int status)
 {
-    qDebug() << "checkBox clicked id: " << i2q(status) << endl;
-
     switch (status) {
     case TESTING:
         mTesting[item] = true;
