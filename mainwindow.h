@@ -19,10 +19,10 @@ typedef enum eTestItemIndex
 
 typedef enum eTestItemStatus
 {
-    WAITING_TEST = 0x00,
-    TESTING = 0x01,
-    RESULT_OK = 0x02,
-    RESULT_NG = 0x04,
+    TESTING,
+    RESULT_OK,
+    RESULT_NG,
+    STATUS_COUNT,
 } eTestItemStatus;
 
 using namespace std;
@@ -49,6 +49,7 @@ private:
     void initItemGroup();
     void initExeGroup();
     void setItemStatus(eTestItemIndex item, int status);
+    void clearItemStatus(eTestItemIndex item);
     void twinkle(eTestItemIndex item);
     string i2s(int i) {return to_string(i);}
     QString s2q(string str) {return QString::fromStdString(str);}
